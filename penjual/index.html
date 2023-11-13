@@ -55,6 +55,8 @@
 
       <h3>Tambah barang<h3>
 
+          <p id="contoh"></p>
+
 
           <from>
             <div class="mb-3">
@@ -87,6 +89,26 @@
       </ul>
       <p class="text-center text-body-secondary">&copy; 2023 pasar cemerlang</p>
     </footer>
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+      import { konfigurasiFirebase } from '/pasarcemerlang/konfigurasi-firebase.js';
+      import { getFirestore, collection, addDoc } from "firebase/firestore";
+
+      const app = initializeApp(konfigurasiFirebase);
+      const db = getFirestore(app);
+
+      try {
+        const barangRef = await addDoc(collection(db, "barang"), {
+          foto: "",
+          nama: "proyektor",
+          harga: 100000
+        });
+
+        document.getElementById("contoh").innerHTML = barangRef.id;
+      } catch (e) {
+        document.getElementById("contoh").innerHTML = e;
+      }
+    </script>
 </body>
 
 </html>
