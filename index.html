@@ -65,27 +65,6 @@
           </div>
 
 
-          <div class="card">
-            <img src="https://picsum.photos/100/60" class="card-img-top">
-            <div class="card-body">
-              <span>celana dalam untuk pria</span>
-            </div>
-          </div>
-
-
-          <div class="card">
-            <img src="https://picsum.photos/100/60" class="card-img-top">
-            <div class="card-body">
-              <span>celana dalam untuk pria</span>
-            </div>
-          </div>
-
-          <div class="card">
-            <img src="https://picsum.photos/100/60" class="card-img-top">
-            <div class="card-body">
-              <span>celana dalam untuk pria</span>
-            </div>
-          </div>
           <footer class="py-3 bg-dark-subtle mt-auoto">
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
               <li class="nav-item"><a href="/pasarcemerlang/index.html" id="link-login-penjual" class="nav-link px-2 text-body-secondary">Beranda</a></li>
@@ -106,12 +85,44 @@
       onAuthStateChanged,
       GoogleAuthProvider,
     } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
-    import { konfigurasiFirebase } from '/pasarcemerlang/konfigurasi-firebase.js';
+    import { getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
     const app = initializeApp(konfigurasiFirebase);
     const provider = new GoogleAuthProvider();
-    const auth = getAuth();
+    const db = getAuth(app);
+    
+    async function ambilDaftarbarang 
+    const querySnapshot = await getDocs(collection(db, "barang"));
+    let daftarBarang = [];
+querySnapshot.forEach((doc) => {
+  daftarBarang.push({
+    id: doc.id,
+    nama: doc.data().nama,
+    harga: doc.data().harga,
+    foto: doc.data().foto
+  });
+});
 
+
+return daftarBarang;
+}
+   $(document).ready(function(){
+   let elDaftarBarang = $("#dafatar-barang");
+   
+   let kumpulanBarang = await ambilDaftarbarang();
+   
+  kumpulanBarang.firEach((element) => {
+   elDaftarBarang.append(
+     '<div class="card">'+
+     '<img src="https://picsum.photo/100/68" class="card-img-top">'+
+     '<div class="card-body">'+
+     '<span>' + element.nama + ', '+ element.harga+'</span>
+     </div>
+     </div>
+  
+   );
+  });
+  
     $(document).ready(function() {
       $("#penjual").click(function() {
         signInWithPopup(auth, provider)
