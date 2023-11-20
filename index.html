@@ -69,85 +69,84 @@
             <ul class="nav justify-content-center border-bottom pb-3 mb-3">
               <li class="nav-item"><a href="/pasarcemerlang/index.html" id="link-login-penjual" class="nav-link px-2 text-body-secondary">Beranda</a></li>
               <li class="nav-item"><a href="#" id="penjual" class="nav-link px-2 text-body-secondary">login penjual</a></li>
-              <li class="nav-item"><a href
-              ="/pasarcemerlang/tentang.html" class="nav-link px-2 text-body-secondary">tentang</a></li>
-             
+              <li class="nav-item"><a href="/pasarcemerlang/tentang.html" class="nav-link px-2 text-body-secondary">tentang</a></li>
+
             </ul>
             <p class="text-center text-body-secondary">&copy; 2023 pasar cemerlang</p>
           </footer>
 
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
-    import {
-      getAuth,
-      signInWithPopup,
-      signOut,
-      onAuthStateChanged,
-      GoogleAuthProvider,
-    } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
-    import { getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+          <script type="module">
+            import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
+            import {
+              getAuth,
+              signInWithPopup,
+              signOut,
+              onAuthStateChanged,
+              GoogleAuthProvider,
+            } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+            import { getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
 
-    const app = initializeApp(konfigurasiFirebase);
-    const provider = new GoogleAuthProvider();
-    const db = getAuth(app);
-    const db = getFirestore(app);
-    async function ambilDaftarbarang() {
-    const querySnapshot = await getDocs(collection(db, "barang"));
-    let daftarBarang = [];
-querySnapshot.forEach((doc) => {
-  daftarBarang.push({
-    id: doc.id,
-    nama: doc.data().nama,
-    harga: doc.data().harga,
-    foto: doc.data().foto
-  });
-});
+            const app = initializeApp(konfigurasiFirebase);
+            const provider = new GoogleAuthProvider();
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            async function ambilDaftarbarang() {
+              const querySnapshot = await getDocs(collection(db, "barang"));
+              let daftarBarang = [];
+              querySnapshot.forEach((doc) => {
+                daftarBarang.push({
+                  id: doc.id,
+                  nama: doc.data().nama,
+                  harga: doc.data().harga,
+                  foto: doc.data().foto
+                });
+              });
 
 
-return daftarBarang;
-}
-   $(document).ready(function(){
-   let elDaftarBarang = $("#daftar-barang");
-   
-   let kumpulanBarang = await ambilDaftarbarang();
-   
-  kumpulanBarang.forEach((element) => {
-   elDaftarBarang.append(
-     '<div class="card">'+
-     '<img src="https://picsum.photo/100/68" class="card-img-top">'+
-     '<div class="card-body">'+
-     '<span>' + element.nama + ', '+ element.harga+'</span>
-     </div>
-     </div>
-  
-   );
-  });
-  
-    $(document).ready(function() {
-      $("#penjual").click(function() {
-        signInWithPopup(auth, provider)
-          .then((result) => {
-            // This gives you a Google Access Token. You can use it to access the Google API.
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            // The signed-in user info.
-            const user = result.user;
-            // IdP data available using getAdditionalUserInfo(result)
-            // ...
-            location.replace('/pasarcemerlang/penjual/index.html');
-          }).catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            // ...
-          });
-      });
-    });
-  </script>
+              return daftarBarang;
+            }
+            $(document).ready(function() {
+                  let elDaftarBarang = $("#daftar-barang");
+
+                  let kumpulanBarang = await ambilDaftarbarang();
+
+                  kumpulanBarang.forEach((element) => {
+                    elDaftarBarang.append(
+                      '<div class="card">' +
+                      '<img src="https://picsum.photo/100/68" class="card-img-top">' +
+                      '<div class="card-body">' +
+                      '<span>' + element.nama + ', ' + element.harga + '</span> <
+                      /div> <
+                      /div>
+
+                    );
+                  });
+
+                  $(document).ready(function() {
+                    $("#penjual").click(function() {
+                      signInWithPopup(auth, provider)
+                        .then((result) => {
+                          // This gives you a Google Access Token. You can use it to access the Google API.
+                          const credential = GoogleAuthProvider.credentialFromResult(result);
+                          const token = credential.accessToken;
+                          // The signed-in user info.
+                          const user = result.user;
+                          // IdP data available using getAdditionalUserInfo(result)
+                          // ...
+                          location.replace('/pasarcemerlang/penjual/index.html');
+                        }).catch((error) => {
+                          // Handle Errors here.
+                          const errorCode = error.code;
+                          const errorMessage = error.message;
+                          // The email of the user's account used.
+                          const email = error.customData.email;
+                          // The AuthCredential type that was used.
+                          const credential = GoogleAuthProvider.credentialFromError(error);
+                          // ...
+                        });
+                    });
+                  });
+          </script>
 </body>
 
 </html
