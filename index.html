@@ -77,14 +77,16 @@
 
           <script type="module">
             import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
-            import {
-              getAuth,
-              signInWithPopup,
-              signOut,
-              onAuthStateChanged,
-              GoogleAuthProvider,
-            } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
-            import { getFirestore, collection, getDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+    import {
+      getAuth,
+      signInWithPopup,
+      signOut,
+      onAuthStateChanged,
+      GoogleAuthProvider,
+    } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js';
+    import { konfigurasiFirebase } from '/pasarcemerlang/konfigurasi-firebase.js';
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+
 
             const app = initializeApp(konfigurasiFirebase);
             const provider = new GoogleAuthProvider();
