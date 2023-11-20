@@ -90,7 +90,7 @@
     const app = initializeApp(konfigurasiFirebase);
     const provider = new GoogleAuthProvider();
     const db = getAuth(app);
-    
+    const db = getFirestore(app);
     async function ambilDaftarbarang() {
     const querySnapshot = await getDocs(collection(db, "barang"));
     let daftarBarang = [];
