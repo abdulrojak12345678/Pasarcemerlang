@@ -72,7 +72,7 @@
             </div>
             <div class="mb-3">
               <label class="from-label">foto/Gambar</label>
-              <input type="file" class="from-control">
+              <input type="file" class="from-control" id="foto-Barang">
             </div>
             <div class="mb-3">
               <button type="sumbit" class="btn btn-primary" id="tombol-simpan">simpan</button>
@@ -95,7 +95,9 @@
     <script type="module">
       import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
       import { konfigurasiFirebase } from '/pasarcemerlang/konfigurasi-firebase.js';
-      import { getFirestore, collection, addDoc } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js';
+      import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-firestore.js";
+      import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-storage.js";
+
 
       const app = initializeApp(konfigurasiFirebase);
       const db = getFirestore(app);
@@ -104,16 +106,25 @@
         let namaBarang = $("#nama-barang");
         let hargaBarang = $("#harga-barang");
 
+
         $("#tombol-simpan").click(async function(event) {
           event.preventDefault();
-          
+
+          const fotoBarang = $("#foto-Barang").files[0];
+
           try {
             const barangRef = await addDoc(collection(db,
               "barang"), {
-              foto: "",
+              foto: namaBarang.val() + ".jpg",
               nama: namaBarang.val(),
               harga: hargaBarang.val(),
             });
+
+            const storage = getStorage();
+            const storageRef = ref(storage, namaBarang.val() + ".jpg");
+
+            await uploadBytes(storageRef, fotoBarang);
+
 
             $("#pesan").html("Berhasil menambah Barang " + namaBarang.val());
           } catch (err) {
