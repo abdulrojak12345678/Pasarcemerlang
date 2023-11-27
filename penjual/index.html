@@ -110,7 +110,7 @@
         $("#tombol-simpan").click(async function(event) {
           event.preventDefault();
 
-          const fotoBarang = $("#foto-Barang").files[0];
+          const fotoBarang = $("#foto-Barang").prop('files')[0];
 
           try {
             const barangRef = await addDoc(collection(db,
